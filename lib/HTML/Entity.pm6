@@ -1515,12 +1515,16 @@ our %entities is export(:ALL) = {
     '&zwnj;'=>[8204],
 }
 
-my %ent-trans;
+my @ent-trans;
 our sub decode ($str) is export(:ALL) {
-    %ent-trans //= %entities.map: {; rx/:my$k=.key;$k/ => .value[]».chr.join }
-    $str.trans: %ent-trans;
+    @ent-trans ||= %entities.map: {; rx/:my$k=.key;$k/ => .value[]».chr.join }
+    $str.trans: |@ent-trans;
 }
+our &decode-entities is export = &decode;
 
 our sub encode ($str) is export(:ALL) {
     $str.trans: /\&/ => '&amp;', /\xA0/ => '&nbsp;', /\</ => '&lt;', /\>/ => '&gt;';
 }
+
+our &encode-entities is export = &encode;
+
