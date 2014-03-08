@@ -1515,6 +1515,10 @@ our %entities is export(:ALL) = {
     '&zwnj;'=>[8204],
 }
 
+#| Facilitate, e.g., HTML::Entity<&zdot;>
+method at_key (|k) { %entities.at_key(|k) }
+
+#| Convert HTML entities in a string to the characters they represent
 our sub decode ($str is copy) is export(:ALL) {
     my $to = 0;
     while $str ~~ m:c($to){\&<alpha><alpha>} {
@@ -1533,6 +1537,4 @@ our &decode-entities is export = &decode;
 our sub encode ($str) is export(:ALL) {
     $str.trans: /\&/ => '&amp;', /\xA0/ => '&nbsp;', /\</ => '&lt;', /\>/ => '&gt;';
 }
-
 our &encode-entities is export = &encode;
-
