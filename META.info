@@ -1,0 +1,9 @@
+{
+    "name" : "HTML::Entity",
+    "version" : "*",
+    "author" : "Mouq",
+    "description" : "Encode and decode HTML entities",
+    "provides" : {
+        "HTML::Entity" : "lib/HTML/Entity.pm6"
+    },
+}
