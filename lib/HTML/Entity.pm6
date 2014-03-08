@@ -1526,6 +1526,7 @@ our sub decode ($str is copy) is export(:ALL) {
         }
         $to = $/.to;
     }
+    $str ~~ s:g['&#'(<[0..9]>+)';'] = $0.chr;
     $str
 }
 our &decode-entities is export = &decode;
