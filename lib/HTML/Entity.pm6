@@ -1516,11 +1516,11 @@ our %entities is export(:ALL) = {
 }
 
 my %ent-trans;
-our sub decode is export(:ALL) ($str) {
-    %ent-trans //= %entities.map: {; rx/my$k=.key;$k}>/ => .value[]».chr.join }
+our sub decode ($str) is export(:ALL) {
+    %ent-trans //= %entities.map: {; rx/:my$k=.key;$k/ => .value[]».chr.join }
     $str.trans: %ent-trans;
 }
 
-our sub encode is export(:ALL) ($str) {
+our sub encode ($str) is export(:ALL) {
     $str.trans: /\&/ => '&amp;', /\xA0/ => '&nbsp;', /\</ => '&lt;', /\>/ => '&gt;';
 }
