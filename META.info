@@ -5,5 +5,5 @@
     "author" : "Alexander Moquin",
     "provides" : { "HTML::Entity" : "lib/HTML/Entity.pm6" },
     "depends" : [ ],
-    "source-url" : "git://github.com/Mouq/HTML-Entity.git",
+    "source-url" : "git://github.com/Mouq/HTML-Entity.git"
 }
