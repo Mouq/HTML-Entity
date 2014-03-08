@@ -1516,9 +1516,17 @@ our %entities is export(:ALL) = {
 }
 
 my @ent-trans;
-our sub decode ($str) is export(:ALL) {
-    @ent-trans ||= %entities.map: {; rx/:my$k=.key;$k/ => .value[]».chr.join }
-    $str.trans: |@ent-trans;
+our sub decode ($str is copy) is export(:ALL) {
+    my $to = 0;
+    while $str ~~ m:c($to){\&<alpha><alpha>} {
+        $to = $/.to;
+        for %entities.grep(*.key.substr(0,3) eq $/).sort(-*.key.chars) -> (:$key,:$value) {
+            $str ~~ s:p($to - 3)[$key] = (my$last)++ || $value».chr.join;
+            last if $last;
+        }
+        $to = $/.to;
+    }
+    $str
 }
 our &decode-entities is export = &decode;
 
