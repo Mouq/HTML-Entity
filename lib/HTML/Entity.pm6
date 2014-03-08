@@ -1515,7 +1515,6 @@ our %entities is export(:ALL) = {
     '&zwnj;'=>[8204],
 }
 
-my @ent-trans;
 our sub decode ($str is copy) is export(:ALL) {
     my $to = 0;
     while $str ~~ m:c($to){\&<alpha><alpha>} {
