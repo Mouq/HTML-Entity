@@ -1,7 +1,7 @@
 class HTML::Entity;
 
 # HTML5 entities, generated from bin/generate_entity_hash.p6
-our %entities is export(:ALL) = {
+our %entities is export(:ALL) =
     '&Aacute;'=>[193],'&Aacute'=>[193],
     '&aacute;'=>[225],'&aacute'=>[225],
     '&Abreve;'=>[258],
@@ -1513,7 +1513,7 @@ our %entities is export(:ALL) = {
     '&zscr;'=>[120015],
     '&zwj;'=>[8205],
     '&zwnj;'=>[8204],
-}
+;
 
 #| Facilitate, e.g., HTML::Entity<&zdot;>
 method at_key (|k) { %entities.at_key(|k) }
