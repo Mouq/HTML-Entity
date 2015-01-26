@@ -15,7 +15,7 @@ our sub decode ($str is copy) is export(:ALL) {
         $to = $/.to - 3;
         my $v;
         for lazy-load-entities{~$/}.sort(-*.key.chars) -> (:$key, :$value) {
-            last if $str ~~ s:p($to)[$key] = $v = $value.map(&chr).join
+            last if $str ~~ s:p($to)[$key] = $v = $value
         }
         $to += $v ?? $v.chars !! 1;
     }
@@ -25,6 +25,12 @@ our sub decode ($str is copy) is export(:ALL) {
 our &decode-entities is export = &decode;
 
 our sub encode ($str) is export(:ALL) {
-    $str.trans: /\&/ => '&amp;', /\xA0/ => '&nbsp;', /\</ => '&lt;', /\>/ => '&gt;';
+    $str.trans:
+        /\&/ => '&amp;',
+        /\</ => '&lt;',
+        /\>/ => '&gt;',
+        /\"/ => '&quot;',
+        /<[\xA0..\xD8FF \xE000..\xFFFD]>{}/
+            => { '&#' ~ $/.ord ~ ';' },
 }
 our &encode-entities is export = &encode;
