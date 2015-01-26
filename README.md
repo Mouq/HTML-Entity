@@ -9,8 +9,10 @@ Can also encode basic entities via `&encode-entities`/`&encode`.
 
     use HTML::Entity;
     
+    say encode-entities "This <em>needs</em> to be escaped & encoded!";
+        # This &lt;em&gt;needs&lt;/em&gt; to be escaped &amp; encoded!
     say decode-entities "4.99 &approx; 5"; # 4.99 ≈ 5
-    say HTML::Entity<&nesim>.chrs;         # ≂̸
+    say HTML::Entity<&nesim;>              # ≂̸
 
     use HTML::Entity :ALL;
     
