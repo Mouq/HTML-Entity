@@ -1,12 +1,8 @@
 unit class HTML::Entity;
-
-sub lazy-load-entities {
-    require HTML::Entities;
-    %HTML::Entities::entities
-}
+use HTML::Entities;
 
 #| Facilitate, e.g., HTML::Entity<&zdot;>
-method AT-KEY ($k) { lazy-load-entities{$k.substr(0,3)}{$k} }
+method AT-KEY ($k) { %HTML::Entities::entities{$k.substr(0,3)}{$k} }
 
 #| Convert HTML entities in a string to the characters they represent
 our sub decode ($str is copy) is export(:ALL) {
@@ -14,7 +10,7 @@ our sub decode ($str is copy) is export(:ALL) {
     while $str ~~ m:c($to){\&<alpha><alpha>} {
         $to = $/.to - 3;
         my $v;
-        for lazy-load-entities{~$/}.sort(-*.key.chars) -> (:$key, :$value) {
+        for %HTML::Entities::entities{~$/}.sort(-*.key.chars) -> (:$key, :$value) {
             last if $str ~~ s:p($to)[$key] = $v = $value
         }
         $to += $v ?? $v.chars !! 1;
