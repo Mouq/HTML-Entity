@@ -1,5 +1,6 @@
 {
     "name" : "HTML::Entity",
+    "license" : "Artistic-2.0",
     "version" : "*",
     "description" : "Encode and decode HTML entities",
     "author" : "Alexander Moquin",
